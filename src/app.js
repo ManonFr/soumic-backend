@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 
@@ -14,4 +16,7 @@ app.use("/artists", artistRoutes); // Toutes les routes /artists iront dans ce f
 const poiRoutes = require("./routes/poi.routes");
 app.use("/poi", poiRoutes);
 
-module.exports = app;
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
+});
