@@ -11,6 +11,7 @@ exports.getAll = async () => {
             events.date,
             events.start_time,
             events.end_time,
+            stages.id AS stage_id,
             stages.name AS stage_name
         FROM events
         JOIN artists ON events.artist_id = artists.id
