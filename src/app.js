@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+console.log("Fichier app.js bien lancé");
+
 const express = require("express");
 const cors = require("cors");
 
