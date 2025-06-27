@@ -1,8 +1,11 @@
 const mysql = require("mysql2");
-require("dotenv").config();
+const dotenv = require("dotenv");
 
-// Création d'une pool de connexions MySQL
+// Load environment variables based on NODE_ENV
+const env = process.env.NODE_ENV;
+dotenv.config({ path: `.env.${env}` });
 
+// Create MySQL connection pool
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -11,5 +14,5 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-// On utilise .promise() pour pouvoir faire du async/await
-module.exports = pool.promise(); // On exporte la pool en mode "promesse" pour pouvoir utiliser async/await
+// Exports the pool using .promise to enable async/await
+module.exports = pool.promise();

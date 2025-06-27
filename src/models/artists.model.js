@@ -1,6 +1,6 @@
 const db = require("./db");
 
-// Fonction qui récupère tous les artistes + infos de leur concert
+// Fetch all artists with their concert information
 exports.getAll = async () => {
   const [rows] = await db.query(`
         SELECT
@@ -19,10 +19,10 @@ exports.getAll = async () => {
         JOIN stages ON events.stage_id = stages.id
         ORDER BY events.date, events.start_time
         `);
-  return rows; // Retourne un tableau d'artistes enrichis
+  return rows; // Returns an array of enriched artist objects
 };
 
-// Créer artiste et event correspondant
+// Create a new artist and the corresponding event
 exports.create = async ({
   name,
   photo,
@@ -56,7 +56,7 @@ exports.create = async ({
   };
 };
 
-// Modifier artiste et event correspondant
+// Update an existing artist and their event
 exports.update = async (
   id,
   { name, photo, genre_id, date, start_time, end_time, stage_id }
@@ -74,8 +74,19 @@ exports.update = async (
   return { id, name, photo, genre_id, date, start_time, end_time, stage_id };
 };
 
-// Supprimer artiste et event(s)
+// Delete an artist and their related events
 exports.delete = async (id) => {
   await db.query(`DELETE FROM events WHERE artist_id = ?`, [id]);
   await db.query(`DELETE FROM artists WHERE id = ?`, [id]);
+  return { delete: true };
+};
+
+exports.findByName = async (name) => {
+  const [rows] = await db.query("SELECT * FROM artists WHERE name = ?", [name]);
+  return rows[0];
+};
+
+exports.getOne = async (id) => {
+  const [rows] = await db.query("SELECT * FROM artists WHERE id = ?", [id]);
+  return rows[0]; // Return artist object or undefined if not found
 };

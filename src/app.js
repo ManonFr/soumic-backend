@@ -1,24 +1,39 @@
 require("dotenv").config();
 
-console.log("Fichier app.js bien lancé");
-
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 
-// Middleware de base
-app.use(cors()); // Autorise les appels depuis le front
-app.use(express.json()); // Permet de lire les requêtes JSON
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://soumic-backoffice.vercel.app",
+];
+
+// Badic middleware
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+); // Allows requests from the frontend
+app.use(express.json()); // Parses incoming JSON requests
 
 // Routes
 const artistRoutes = require("./routes/artists.routes");
-app.use("/artists", artistRoutes); // Toutes les routes /artists iront dans ce fichier
+app.use("/artists", artistRoutes); // All /artists routes go through this router
 
 const poiRoutes = require("./routes/poi.routes");
 app.use("/poi", poiRoutes);
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Serveur démarré sur le port ${PORT}`);
-});
+const adminRoutes = require("./routes/admin.routes");
+app.use("/admin", adminRoutes);
+
+// Exports app for testing
+module.exports = app;

@@ -1,7 +1,8 @@
 const db = require("./db");
 
 exports.getAll = async () => {
-  // On récupère les scènes
+  // Fetch all stages
+  // Used later to distinguish stages from other POIs
   const [stages] = await db.query(`
         SELECT
             id,
@@ -12,7 +13,7 @@ exports.getAll = async () => {
             FROM stages
             `);
 
-  // On récupère les autres POIs
+  // Fetch all other POIs
   const [amenities] = await db.query(`
         SELECT
             amenities.id,
@@ -25,6 +26,6 @@ exports.getAll = async () => {
         JOIN poi ON amenities.poi_id = poi.id
         `);
 
-  // On combine les deux
+  // Combine stages and amenities into a single array
   return [...stages, ...amenities];
 };
