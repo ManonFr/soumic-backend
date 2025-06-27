@@ -8,9 +8,10 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://soumic-backoffice.vercel.app",
+  "https://www.soumic-backoffice.vercel.app",
 ];
 
-// Badic middleware
+// CORS middleware with custom origin checking
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -22,7 +23,8 @@ app.use(
     },
     credentials: true,
   })
-); // Allows requests from the frontend
+);
+
 app.use(express.json()); // Parses incoming JSON requests
 
 // Routes

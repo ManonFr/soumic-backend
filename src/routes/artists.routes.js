@@ -7,4 +7,5 @@ router.post("/", artistController.createArtist);
 router.put("/:id", artistController.updateArtist);
 router.delete("/:id", artistController.deleteArtist);
 
+// Export the router so it can be used in app.js
 module.exports = router;
