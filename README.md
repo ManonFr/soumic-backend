@@ -2,15 +2,11 @@
 
 This is the backend of the **Soumic project**, built with **Node.js**, **Express**, and **MySQL**.
 
----
-
 ## Requirements
 
 - Node.js (v18 or newer)
 - MySQL or MariaDB
 - `.env` file with database credentials (see below)
-
----
 
 ## Setup
 
@@ -45,8 +41,6 @@ npm run dev
 
 The server will run at: [http://localhost:3001](http://localhost:3001)
 
----
-
 ## Generate a password hash (for admin login)
 
 Use this script to generate a bcrypt hash:
@@ -56,8 +50,6 @@ node src/generateHash.js yourPassword
 ```
 
 Copy the output into the `password_hash` column of the `admin` table.
-
----
 
 ## API Routes
 
@@ -76,23 +68,17 @@ Copy the output into the `password_hash` column of the `admin` table.
 
 - `POST /admin/login`
 
----
-
 ## Conventions
 
 - No `console.log` or `console.error` in final code
 - All comments are written in **English**
 - Async logic uses `async/await` only
 
----
-
 ## About
 
 This backend is part of a full-stack project.  
 It exposes a REST API for use with a compatible frontend (React, Vue, etc.).
 
----
-
 ## License
 
-MIT
+This project is for educational purposes and has no specific license.
